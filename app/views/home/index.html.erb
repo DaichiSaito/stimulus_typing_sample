@@ -1,0 +1,28 @@
+<h1>トップページ</h1>
+
+<div data-controller="post-container" data-post-container-post-item-outlet=".item">
+  <h2>現在の問題番号: <span data-post-container-target="currentNumberLabel"></span></h2>
+  <% @posts.each.with_index(1) do |post, index| %>
+    <div data-controller="post-item"
+         data-post-container-target="item"
+         data-post-item-number-value="<%= index %>"
+         data-post-item-spell-value="<%= post.spell %>"
+         data-post-item-is-last-value="<%= index == @posts.size %>"
+         data-action="post-item:next->post-container#next post-item:complete->post-container#complete"
+         class="item <%= 'd-none' if index != 1 %>">
+      <h3>問題<%= index %></h3>
+      <div>
+        <%= post.spell %>
+      </div>
+      <div>
+        <input type="text" data-post-item-target="input" data-action="input->post-item#inputChanged" autofocus>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .d-none {
+      display: none;
+  }
+</style>
